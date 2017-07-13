@@ -6,7 +6,6 @@ var plumber = require('gulp-plumber');
 var postcss = require('gulp-postcss');
 var autoprefixer = require('autoprefixer');
 var server = require('browser-sync').create();
-var pug = require('gulp-pug');
 var gulp = require('gulp');
 var rename = require('gulp-rename');
 var svgstore = require('gulp-svgstore');
@@ -46,18 +45,6 @@ gulp.task('images', function() {
     .pipe(gulp.dest('build/img'));
 });
 
-
-gulp.task('pug', function buildHTML() {
-  gulp.src('source/pug/*.pug')
-  .pipe(pug({
-    pretty: true
-  }))
-  .pipe(prettify({indent_char: ' ', indent_size: 2}))
-  .pipe(gulp.dest(''));
-});
-
-
-
 gulp.task('symbols', function() {
   return gulp.src('build/*.svg')
     .pipe(svgmin())
@@ -69,7 +56,7 @@ gulp.task('symbols', function() {
 });
 
 gulp.task('style', function() {
-  gulp.src('sass/style.scss')
+  gulp.src('sass/style.sass')
     .pipe(plumber())
     .pipe(sass())
     .pipe(postcss([
@@ -78,7 +65,7 @@ gulp.task('style', function() {
       ]})
     ]))
     .pipe(cssmin())
-    .pipe(gulp.dest('build/css'))
+    .pipe(gulp.dest('css'))
     .pipe(server.stream());
 });
 
@@ -93,8 +80,8 @@ gulp.task('serve', ['style'], function() {
 });
 
 gulp.task('build', function(fn) {
-  run ('clean',/*'pug',*/'images','copy','symbols','style',fn);
+  run ('clean','images','copy','symbols','style',fn);
 });
 
-  gulp.watch('sass/**/*.{scss,sass}', ['style']);
+gulp.watch('sass/**/*.{scss,sass}', ['style']);
 gulp.watch('*.html').on('change', server.reload);
