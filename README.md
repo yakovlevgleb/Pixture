@@ -1,4 +1,7 @@
 # telecom-test [![Build status][travis-image]][travis-url] [![Dependency status][dependency-image]][dependency-url]
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/yakovlevgleb/Pixture.svg)](https://greenkeeper.io/)
+
 06 07 2017
 
 ## Install & Run
